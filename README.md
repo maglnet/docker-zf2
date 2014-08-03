@@ -19,7 +19,6 @@ sudo docker run -d -p 8080:80 \
 ### Example with ZF2 Skeleton Application
 
 ```bash
-mkdir zend-skeleton
 curl -s https://getcomposer.org/installer | php --
 php composer.phar create-project \
         -sdev --repository-url="https://packages.zendframework.com" \
