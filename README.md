@@ -11,8 +11,9 @@ Run your docker container and adjust `/home/user/git/your-zf2-app` to match the
 local path to your ZF2 Application root.
 
 ```bash
+cd /home/user/your-zf2-app
 sudo docker run -d -p 8080:80 \
-        -v /home/user/your-zf2-app:/zf2-app maglnet/docker-zf2
+        -v $(pwd):/zf2-app maglnet/docker-zf2
 ```
 
 ### Example with ZF2 Skeleton Application
