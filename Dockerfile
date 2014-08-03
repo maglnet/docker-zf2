@@ -1,11 +1,9 @@
-
-
 FROM ubuntu:14.04
 
 MAINTAINER Matthias Glaub <magl@magl.net>
 
-RUN apt-get -qq update && apt-get -qq install -y \
-        apache2 php5 php5-mysql php5-sqlite php5-curl php5-intl
+RUN apt-get -qq update \
+        && apt-get -qq install -y apache2 php5 php5-mysql php5-sqlite php5-curl php5-intl
 
 # setting apache env vars
 ENV APACHE_CONFDIR /etc/apache2
@@ -25,12 +23,13 @@ RUN find "$APACHE_CONFDIR" -type f -exec sed -ri ' \
         s!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g; \
         ' '{}' ';'
 
-# apache modules
-RUN a2enmod rewrite
-
-#configuring apache
+# adding site configuration
 ADD assets/apache2/sites-available/ /etc/apache2/sites-available/
-RUN a2dissite 000-default && a2ensite zf2-app
+
+# apache configuration
+RUN a2enmod rewrite \
+    && a2dissite 000-default \
+    && a2ensite zf2-app
 
 EXPOSE 80
 ENTRYPOINT ["/usr/sbin/apache2"]
