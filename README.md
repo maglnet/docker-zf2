@@ -41,7 +41,8 @@ This requires you to take the following steps:
 * Step 3: Start your ZF2 Application Container and link it to the MySQL container
 * Step 4: Adjust your ZF2 configuration
 
-**Step 1: Start your MySQL container**  
+**Step 1: Start your MySQL container**
+
 ```bash
 sudo docker run -P --name zf2-mysql -e MYSQL_ROOT_PASSWORD=mysecretpassword -d mysql
 ```
@@ -49,6 +50,7 @@ sudo docker run -P --name zf2-mysql -e MYSQL_ROOT_PASSWORD=mysecretpassword -d m
 **Step 2: Import your database schema**  
 Let's first check on which port the MySQL Server is listening
 (it's port `49154` in this case):
+
 ```bash
 # sudo docker ps
 CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                     NAMES
@@ -57,7 +59,8 @@ CONTAINER ID        IMAGE               COMMAND                CREATED          
 You can now connect to `localhost:49154` with your favorite MySQL tool and import your schema.
 
 
-**Step 3: Start your ZF2 application container linked to MySQL**  
+**Step 3: Start your ZF2 application container linked to MySQL**
+  
 ```bash
 sudo docker run --name zf2-web --link zf2-mysql:mysql -d -p 8888:80 -v $(pwd):/zf2-app maglnet/docker-zf2
 ```
