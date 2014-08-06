@@ -2,7 +2,9 @@ FROM ubuntu:14.04
 
 MAINTAINER Matthias Glaub <magl@magl.net>
 
+# update and install packages
 RUN apt-get -qq update \
+        && apt-get upgrade -y
         && apt-get -qq install -y apache2 php5 php5-mysql php5-sqlite php5-curl php5-intl
 
 # setting apache env vars
