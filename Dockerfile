@@ -1,4 +1,5 @@
-FROM ubuntu:14.04
+FROM debian:stable
+ENV DEBIAN_FRONTEND noninteractive
 
 MAINTAINER Matthias Glaub <magl@magl.net>
 
@@ -30,7 +31,8 @@ ADD assets/apache2/sites-available/ /etc/apache2/sites-available/
 
 # apache configuration
 RUN a2enmod rewrite \
-    && a2dissite 000-default \
+    && a2dissite default \
+    && a2dissite default-ssl \
     && a2ensite zf2-app
 
 EXPOSE 80
