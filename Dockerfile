@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM ubuntu:14.04
 ENV DEBIAN_FRONTEND noninteractive
 
 MAINTAINER Matthias Glaub <magl@magl.net>
@@ -6,7 +6,7 @@ MAINTAINER Matthias Glaub <magl@magl.net>
 # update and install packages
 RUN apt-get -qq update \
         && apt-get -qq upgrade -y \
-        && apt-get -qq install -y apache2 php5 php5-mysql php5-sqlite php5-curl php5-intl
+        && apt-get -qq install -y apache2 php5 php5-mysql php5-sqlite php5-curl php5-intl php5-xdebug
 
 # setting apache env vars
 ENV APACHE_CONFDIR /etc/apache2
@@ -26,15 +26,15 @@ RUN find "$APACHE_CONFDIR" -type f -exec sed -ri ' \
         s!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g; \
         ' '{}' ';'
 
-# adding site configuration
-ADD assets/apache2/sites-available/ /etc/apache2/sites-available/
+# adding configuration
+ADD assets/etc/ /etc/
 
 # apache configuration
 RUN a2enmod rewrite \
-    && a2dissite default \
-    && a2dissite default-ssl \
+    && a2dissite 000-default \
     && a2ensite zf2-app
 
 EXPOSE 80
+
 ENTRYPOINT ["/usr/sbin/apache2"]
 CMD ["-D", "FOREGROUND"]
