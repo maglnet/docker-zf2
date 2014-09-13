@@ -26,15 +26,9 @@ RUN find "$APACHE_CONFDIR" -type f -exec sed -ri ' \
         s!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g; \
         ' '{}' ';'
 
-# adding configuration
-ADD assets/etc/ /etc/
-
-# apache configuration
-RUN a2enmod rewrite \
-    && a2dissite 000-default \
-    && a2ensite zf2-app
+# adding assets
+ADD assets/ /assets/
 
 EXPOSE 80
 
-ENTRYPOINT ["/usr/sbin/apache2"]
-CMD ["-D", "FOREGROUND"]
+ENTRYPOINT ["/assets/entrypoint.sh"]
