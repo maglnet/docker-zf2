@@ -1,6 +1,7 @@
 #!/bin/bash
 
-DOCKER_ZF2_ENV=${DOCKER_ZF2_ENV:-"DEV"}
+export DOCKER_ZF2_ENV=${DOCKER_ZF2_ENV:-"DEV"}
+
 INIT_CHECK_FILE="/etc/DOCKER-INITIALIZED"
 ASSET_DIR_DEFAULT_ETC="/assets/_default/etc/."
 
@@ -46,7 +47,7 @@ if [ ! -e "$INIT_CHECK_FILE" ]; then
         say "(default) enable php5 module $MOD"
         php5enmod $MOD
     done
-    
+
     for MOD in $PHP_MODS_DISABLE
     do
         say "disable php5 module $MOD"
